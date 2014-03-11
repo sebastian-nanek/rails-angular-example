@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20140310222332) do
     t.integer  "user_id",                    null: false
     t.text     "content"
     t.datetime "due_date"
-    t.float    "sort_order"
     t.integer  "priority",   default: 1,     null: false
     t.boolean  "completed",  default: false, null: false
     t.datetime "created_at"
