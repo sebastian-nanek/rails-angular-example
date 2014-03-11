@@ -1,5 +1,5 @@
 class ToDosController < InheritedResources::Base
-  respond_to :html, :json
+  respond_to :js, :json
 
   private
   def collection
