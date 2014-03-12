@@ -33,7 +33,7 @@ describe "GET /to_dos.json" do
     it "returns serialized ToDos for current user" do
       get to_dos_path(format: "json"), { :auth_token => auth_token }
 
-      todos = JSON.parse(response.body)["to_dos"]
+      todos = JSON.parse(response.body)
       expect(todos.first["content"]).to eq(sample_content)
     end
   end
