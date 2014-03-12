@@ -48,6 +48,9 @@ gem 'puma'
 # easier JSON response building
 gem 'active_model_serializers'
 
+# for clean UI looks
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+
 group :test, :development do
   # test using rspec
   gem "rspec"
