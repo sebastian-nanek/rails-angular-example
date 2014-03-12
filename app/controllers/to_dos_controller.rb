@@ -1,5 +1,5 @@
 class ToDosController < InheritedResources::Base
-  respond_to :js, :json
+  respond_to :json
 
   def index
     super do |format|
