@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   begin :associations
+    has_many :authentication_tokens
     has_many :to_dos
   end
 end
