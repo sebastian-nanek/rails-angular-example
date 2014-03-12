@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  root "home#show"
+
   devise_for :users
+
   resources :to_dos
   resource :token_session, only: ["create"]
 
