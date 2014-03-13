@@ -49,7 +49,7 @@ gem 'puma'
 gem 'active_model_serializers'
 
 # for clean UI looks
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', git: 'git://github.com/seyhunak/twitter-bootstrap-rails.git', branch: "bootstrap3"
 
 group :test, :development do
   # test using rspec
