@@ -8,5 +8,8 @@
   = csrf_meta_tags
 
 %body
-  .ng-view
-    = yield
+  .container
+    %h1
+      = t("app_name")
+    .ng-view
+      = yield
