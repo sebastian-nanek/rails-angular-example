@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module Todo
   class Application < Rails::Application
+    # serve app/assets/fonts as a part of assets suite
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
