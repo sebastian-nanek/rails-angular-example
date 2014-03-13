@@ -1,5 +1,6 @@
 class ToDosController < InheritedResources::Base
   respond_to :json
+  before_filter :authenticate_user!
 
   def index
     super do |format|
