@@ -4,6 +4,9 @@ class ToDo < ActiveRecord::Base
   end
 
   begin :validations
+    validates :content,
+      presence: true,
+      length:   { minimum: 1 }
     validates :priority,
       presence: true,
       numericality: { in: 1..5 }
