@@ -8,7 +8,7 @@
 <div class="clearfix"></div>
 
 
-<table id="toDoList" class="table-striped">
+<table id="toDoList" class="table-striped table">
   <thead>
     <th id="toDoListId">
       #
@@ -24,7 +24,7 @@
     </th>
     <th id="toDoListActions">Actions</th>
   </thead>
-  <tr ng-repeat="to_do in to_dos | orderBy:predicate:reverse">
+  <tr ng-repeat="to_do in to_dos | orderBy:predicate:reverse" ng-class="{danger: to_do.priority == 5, warning: to_do.priority == 4}">
     <td>
       <strong>
         {{ $index + 1 }}.
