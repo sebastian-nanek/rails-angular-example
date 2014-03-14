@@ -10,13 +10,21 @@
 
 <table id="toDoList" class="table-striped">
   <thead>
-    <th id="toDoListId">#</th>
+    <th id="toDoListId">
+      #
+    </th>
     <th id="toDoListTask">Task</th>
-    <th id="toDoListDueDate">Due date</th>
-    <th id="toDoListPriority">Priority</th>
+    <th id="toDoListDueDate">
+      <a ng-click="predicate = 'due_date'; reverse=!reverse">Due date</a>
+      <span class="caret"></span>
+    </th>
+    <th id="toDoListPriority">
+      <a ng-click="predicate = 'priority'; reverse=!reverse">Priority</a>
+      <span class="caret"></span>
+    </th>
     <th id="toDoListActions">Actions</th>
   </thead>
-  <tr ng-repeat="to_do in to_dos">
+  <tr ng-repeat="to_do in to_dos | orderBy:predicate:reverse">
     <td>
       <strong>
         {{ $index + 1 }}.
