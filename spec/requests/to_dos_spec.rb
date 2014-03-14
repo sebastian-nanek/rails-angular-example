@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "/to_dos" do
+describe "to_dos endpoint" do
   let(:auth_token) { token.auth_token }
   let(:token)      { AuthenticationToken.find_or_create_for(user) }
   let(:user) do
@@ -43,6 +43,65 @@ describe "/to_dos" do
 
         todos = JSON.parse(response.body)
         expect(todos.first["content"]).to eq(sample_content)
+      end
+    end
+  end
+
+  describe "POST /to_dos.json" do
+    let(:content)  { Faker::Lorem.sentence }
+    let(:due_date) { Date.today + 1.week }
+    let(:priority) { 3 }
+    let(:data) do
+      {
+        content: content,
+        priority: priority,
+        due_date: due_date
+      }
+    end
+    let(:to_do) do
+      ToDo.create({
+        content: Faker::Lorem.sentence,
+        user_id: user.id,
+        priority: 1,
+        due_date: Date.today + 2.days
+      })
+    end
+
+    context "with valid data" do
+      it "creates a new record" do
+        expect {
+          post to_dos_path(format: "json"), { :auth_token => auth_token, :to_do => data }
+        }.to change(ToDo, :count).by(1)
+      end
+
+      it "returns 204 response status" do
+        post to_dos_path(format: "json"), { :auth_token => auth_token, :to_do => data }
+
+        expect(response.status).to eq(201)
+      end
+
+    end
+
+    context "with invalid data" do
+      let(:content) { "" } # just enough to fire validation error
+
+      it "does not create a new record" do
+        expect {
+          post to_dos_path(format: "json"), { :auth_token => auth_token, :to_do => data }
+        }.not_to change(ToDo, :count)
+      end
+
+      it "returns validation errors" do
+        post to_dos_path(format: "json"), { :auth_token => auth_token, :to_do => data }
+
+        expected_response = "{\"errors\":{\"content\":[\"can't be blank\",\"is too short (minimum is 1 characters)\"]}}"
+        expect(response.body).to eq(expected_response)
+      end
+
+      it "returns 422 response status" do
+        post to_dos_path(format: "json"), { :auth_token => auth_token, :to_do => data }
+
+        expect(response.status).to eq(422)
       end
     end
   end
