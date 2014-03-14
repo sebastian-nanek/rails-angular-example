@@ -1,0 +1,19 @@
+table#toDoList {
+  thead {
+    th {
+      &#toDoListActions  { width: 15%; }
+      &#toDoListPriority { width: 10%; }
+      &#toDoListDueDate  { width: 10%; }
+      &#toDoListId       { width: 5%;  }
+    }
+  }
+
+  td:first-child, th:first-child, td:last-child, {
+    text-align: right;
+  }
+
+}
+
+*[ng-click] {
+  cursor: pointer;
+}
