@@ -1,0 +1,56 @@
+<div class="actions pull-right">
+  <a href="#to_dos/new" class="btn btn-success">
+    <i class="glyphicon glyphicon-plus"></i>
+    New task
+  </a>
+</div>
+<br><br>
+<div class="clearfix"></div>
+
+
+<table id="toDoList" class="table-striped">
+  <thead>
+    <th id="toDoListId">#</th>
+    <th id="toDoListTask">Task</th>
+    <th id="toDoListDueDate">Due date</th>
+    <th id="toDoListPriority">Priority</th>
+    <th id="toDoListActions">Actions</th>
+  </thead>
+  <tr ng-repeat="to_do in to_dos">
+    <td>
+      <strong>
+        {{ $index + 1 }}.
+      </strong>
+    </td>
+    <td>
+      {{ to_do.content }}
+      <span class="badge" ng-hide="to_do.completed != true">
+        completed
+      </span>
+    </td>
+    <td>
+      {{ to_do.due_date | date:'yyyy-MM-dd' }}
+    </td>
+    <td>
+      {{ to_do.priority }}
+    </td>
+    <td>
+      <a href="#/to_dos/{{to_do.id}}/complete" class="btn-primary btn btn-xs">
+        <i class="glyphicon glyphicon-ok"></i>
+        Complete
+      </a>
+      <a href="#to_dos/{{to_do.id}}/delete" class="btn-warning btn btn-xs">
+        <i class="glyphicon glyphicon-trash"></i>
+        Delete
+      </a>
+    </td>
+  </tr>
+</table>
+
+<br>
+<div class="actions pull-right">
+  <a href="#to_dos/new" class="btn btn-success">
+    <i class="glyphicon glyphicon-plus"></i>
+    New task
+  </a>
+</div>
