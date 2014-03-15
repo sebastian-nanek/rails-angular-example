@@ -106,6 +106,31 @@ describe "to_dos endpoint" do
     end
   end
 
+  describe "DELETE /to_dos/:id.json" do
+    context "with existing record" do
+      let!(:to_do) do
+        ToDo.create({
+          content: Faker::Lorem.sentence,
+          user_id: user.id,
+          priority: 1,
+          due_date: Date.today + 2.days
+        })
+      end
+
+      it "returns HTTP 200" do
+        delete to_do_path(to_do, format: "json"), { :auth_token => auth_token }
+
+        expect(response.status).to eq(204)
+      end
+
+      it "deletes ToDo" do
+        expect {
+          delete to_do_path(to_do, format: "json"), { :auth_token => auth_token }
+        }.to change(ToDo, :count).by(-1)
+      end
+    end
+  end
+
   describe "PATCH /to_dos/:id.json" do
     context "without existing record" do
       it "returns HTTP 404 not found" do
@@ -123,10 +148,6 @@ describe "to_dos endpoint" do
           priority: 1,
           due_date: Date.today + 2.days
         })
-      end
-
-      before do
-        to_do.save
       end
 
       context "marking as complete" do
