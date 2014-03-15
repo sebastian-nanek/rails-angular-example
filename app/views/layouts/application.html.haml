@@ -10,6 +10,7 @@
 %body
   .container
     %h1
-      = t("app_name")
+      = link_to '#/' do
+        = t("app_name")
     .ng-view
       = yield
