@@ -4,6 +4,7 @@
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName("csrf-token")[0].content
   # provide JSON
   $httpProvider.defaults.headers.common['Accept'] = "application/json"
+  $httpProvider.defaults.headers.common['Content-Type'] = "application/json"
 ]
 
 @todoservice.factory('ToDo', ['$resource', ($resource) ->
