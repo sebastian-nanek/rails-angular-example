@@ -18,6 +18,6 @@ class ToDosController < InheritedResources::Base
   end
 
   def permitted_params
-    params.permit(:to_do => [:content, :due_date, :priority, :completed])
+    params.permit(:id, :to_do => [:id, :content, :due_date, :priority, :completed])
   end
 end
