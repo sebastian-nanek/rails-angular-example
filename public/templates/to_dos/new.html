@@ -1,0 +1,38 @@
+<h2>
+  New task
+</h2>
+
+<div class="well">
+  <form ng-submit="create(to_do)">
+    <div class="form-group">
+      <label>
+        Task
+      </label>
+      <input id="to_do_content" ng-model="to_do.content" name="to_do[content]" type="text"  class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label>
+        Priority
+      </label>
+        <select id="to_do_priority" ng-model="to_do.priority" name="to_do[priority]" class="form-control">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+    </div>
+    <div class="form-group">
+      <label>
+        Due date
+      </label>
+
+      <input id="to_do_due_date" ng-model="to_do.due_date" name="to_do[due_date]" type="date"  class="form-control"/>
+    </div>
+    <div class="actions">
+      <input name="commit" type="submit" value="Create" class="btn btn-primary" />
+      &nbsp;or&nbsp;
+      <a href="#to_dos">cancel</a>
+    </div>
+  </form>
+</div>
