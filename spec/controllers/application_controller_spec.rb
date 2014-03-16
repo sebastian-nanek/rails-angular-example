@@ -11,7 +11,7 @@ describe ApplicationController do
 
   describe "#authenticate_by_token" do
 
-    context "when auth_token param is passed" do
+    context "when passing token is passed" do
       let(:auth_token) { 4.times.collect { "12345" }.join }
       let(:user)       { double(User) }
       let(:params) do
@@ -28,16 +28,44 @@ describe ApplicationController do
           AuthenticationToken.stub(:find_by_auth_token).and_return(token)
         end
 
-        it "signs in the user" do
-          expect(controller).to receive(:sign_in).with(:user, user)
+        context "and token is passed in params" do
 
-          get :index, params
+          it "signs in the user" do
+            expect(controller).to receive(:sign_in).with(:user, user)
+
+            get :index, params
+          end
+
+          it "performs token lookup using params[:auth_token]" do
+            expect(AuthenticationToken).to receive(:find_by_auth_token).with(auth_token)
+
+            get :index, params
+          end
         end
 
-        it "performs token lookup using params[:auth_token]" do
-          expect(AuthenticationToken).to receive(:find_by_auth_token).with(auth_token)
+        context "and token is passed in headers" do
+          let(:params) { {} }
+          let(:headers) do
+            {
+              'X-Auth-Token' => auth_token
+            }
+          end
 
-          get :index, params
+          before do
+            request.headers.merge!(headers)
+          end
+
+          it "signs in the user" do
+            expect(controller).to receive(:sign_in).with(:user, user)
+
+            get :index, params
+          end
+
+          it "performs token lookup using params[:auth_token]" do
+            expect(AuthenticationToken).to receive(:find_by_auth_token).with(auth_token)
+
+            get :index, params
+          end
         end
       end
 

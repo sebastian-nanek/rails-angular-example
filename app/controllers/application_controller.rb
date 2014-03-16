@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate_by_token
-    if params.has_key?(:auth_token) && token = AuthenticationToken.active.find_by_auth_token(params[:auth_token])
+    token_value = request.headers['X-Auth-Token'] || params[:auth_token]
+    if token_value.present? && token = AuthenticationToken.active.find_by_auth_token(token_value)
       sign_in(:user, token.user)
     end
   end
