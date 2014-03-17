@@ -2,12 +2,14 @@
   Sign In
 </h2>
 
-<p class="bg-danger" ng-show="errors != ''">
-  {{ errors }}
-</p>
+<div class="panel panel-danger bg-danger" ng-show="errors != ''">
+  <div class="panel-body">
+    {{ errors }}
+  </div>
+</div>
 
 <div class="well">
-  <form ng-submit="sign_in(session)">
+  <form ng-submit="signIn(session)">
     <div class="form-group">
       <label>
         E-mail

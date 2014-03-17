@@ -20,11 +20,10 @@
     }).
     when('/sign_out', {
       controller: 'SignOutCtrl',
-      redirectTo: 'HomeCtrl'
+      redirectTo: 'SignInCtrl'
     }).
     otherwise({
-      templateUrl: '/templates/home.html',
-      controller: 'HomeCtrl'
+      redirectTo: '/sign_in'
     })
 ])
 
@@ -65,9 +64,7 @@
 
 @todoapp.controller 'SignInCtrl', ['$scope', '$location', '$http', '$rootScope', ($scope, $location, $http, $rootScope) ->
   $scope.errors = ""
-  $scope.sign_in = (session) ->
-    console.log(session.email)
-    console.log(session.password)
+  $scope.signIn = (session) ->
     payload =
       email: session.email
       password: session.password
@@ -90,7 +87,4 @@
   $http.defaults.headers.common['X-Auth-Token'] = ""
   $http.delete('./users/sign_out', payload)
   $location.path( "/" );
-]
-
-@todoapp.controller 'HomeCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) ->
 ]
