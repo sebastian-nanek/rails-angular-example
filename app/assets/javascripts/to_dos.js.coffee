@@ -63,6 +63,12 @@
 ]
 
 @todoapp.controller 'SignInCtrl', ['$scope', '$location', '$http', '$rootScope', ($scope, $location, $http, $rootScope) ->
+  # redirect if already authenticated
+  console.log $rootScope.auth_token
+  if $rootScope.auth_token
+    $location.path( "/to_dos" );
+    return
+
   $scope.errors = ""
   $scope.signIn = (session) ->
     if session
