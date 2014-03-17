@@ -5,6 +5,7 @@
   # provide JSON
   $httpProvider.defaults.headers.common['Accept'] = "application/json"
   $httpProvider.defaults.headers.common['Content-Type'] = "application/json"
+  $httpProvider.defaults.headers.common['X-Auth-Token'] = ""
 ]
 
 @todoservice.factory('ToDo', ['$resource', ($resource) ->
