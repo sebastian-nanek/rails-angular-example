@@ -47,6 +47,26 @@ describe "to_dos endpoint" do
     end
   end
 
+  describe "GET /to_dos/1.json" do
+    let(:content)  { Faker::Lorem.sentence }
+    let(:due_date) { Date.today + 1.week }
+    let(:priority) { 3 }
+    let(:to_do) do
+      ToDo.create({
+        content: Faker::Lorem.sentence,
+        user_id: user.id,
+        priority: 1,
+        due_date: Date.today + 2.days
+      })
+    end
+
+    it "returns JSON response" do
+      get to_do_path(to_do, format: "json"), { :auth_token => auth_token }
+
+      expect { JSON.parse(response.body) }.not_to raise_exception
+    end
+  end
+
   describe "POST /to_dos.json" do
     let(:content)  { Faker::Lorem.sentence }
     let(:due_date) { Date.today + 1.week }
