@@ -8,6 +8,7 @@
 <div class="clearfix"></div>
 
 
+<div ng-controller="ToDosCtrl">
 <table id="toDoList" class="table-striped table">
   <thead>
     <th id="toDoListId">
@@ -43,17 +44,22 @@
       {{ to_do.priority }}
     </td>
     <td>
-      <a href="#/to_dos/{{to_do.id}}/complete" class="btn-primary btn btn-xs">
+      <a ng-click="complete($index)" class="btn-primary btn btn-xs">
         <i class="glyphicon glyphicon-ok"></i>
         Complete
       </a>
-      <a href="#to_dos/{{to_do.id}}/delete" class="btn-warning btn btn-xs">
+      <a ng-click="edit($index)" class="btn-success btn btn-xs">
+        <i class="glyphicon glyphicon-edit"></i>
+        Edit
+      </a>
+      <a ng-click="delete($index)" class="btn-warning btn btn-xs">
         <i class="glyphicon glyphicon-trash"></i>
         Delete
       </a>
     </td>
   </tr>
 </table>
+</div>
 
 <br>
 <div class="actions pull-right">
