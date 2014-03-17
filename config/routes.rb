@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "home#show"
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "user_registrations"}
 
   resources :to_dos
   resource :token_session, only: ["create"]
