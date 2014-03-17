@@ -8,9 +8,12 @@
   = csrf_meta_tags
 
 %body
+
+  %header
+    .container
+      %h1
+        = link_to '#/' do
+          = t("app_name")
   .container
-    %h1
-      = link_to '#/' do
-        = t("app_name")
     .ng-view
       = yield
