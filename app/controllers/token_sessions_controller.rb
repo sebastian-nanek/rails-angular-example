@@ -10,7 +10,7 @@ class TokenSessionsController < InheritedResources::Base
 
       response = { json: { user_id: @user.id, auth_token: token.auth_token } }
     else
-      response = { json: { errors: "invalid_credentials" }, status: :error }
+      response = { json: { errors: "invalid_credentials" }, status: :unauthorized }
     end
 
     respond_to do |format|

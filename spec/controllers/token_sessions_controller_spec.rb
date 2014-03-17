@@ -28,10 +28,10 @@ describe TokenSessionsController do
           expect(response.body).to eq(error_response)
         end
 
-        it "sets response status to 500" do
+        it "sets response status to 401" do
           get(:create, format: :json, email: invalid_email, password: password)
 
-          expect(response.status).to eq(500)
+          expect(response.status).to eq(401)
         end
       end
 
@@ -44,10 +44,10 @@ describe TokenSessionsController do
           expect(response.body).to eq(error_response)
         end
 
-        it "sets response status to 500" do
+        it "sets response status to 401" do
           get(:create, format: :json, email: email, password: invalid_password)
 
-          expect(response.status).to eq(500)
+          expect(response.status).to eq(401)
         end
       end
     end
