@@ -65,20 +65,21 @@
 @todoapp.controller 'SignInCtrl', ['$scope', '$location', '$http', '$rootScope', ($scope, $location, $http, $rootScope) ->
   $scope.errors = ""
   $scope.signIn = (session) ->
-    payload =
-      email: session.email
-      password: session.password
-    $http.post('./token_session.json', payload).success((data) ->
-      $rootScope.auth_token = data["auth_token"]
-      $rootScope.user_id    = data["user_id"]
-      $http.defaults.headers.common['X-Auth-Token'] = data["auth_token"]
-      $location.path( "/to_dos" );
-      session.errors = ""
-    ).error(() ->
-      session.email = ""
-      session.password = ""
-      $scope.errors = "Invalid e-mail or password."
-    )
+    if session
+      payload =
+        email: session.email
+        password: session.password
+      $http.post('./token_session.json', payload).success((data) ->
+        $rootScope.auth_token = data["auth_token"]
+        $rootScope.user_id    = data["user_id"]
+        $http.defaults.headers.common['X-Auth-Token'] = data["auth_token"]
+        $location.path( "/to_dos" );
+        session.errors = ""
+      ).error(() ->
+        session.email = ""
+        session.password = ""
+        $scope.errors = "Invalid e-mail or password."
+      )
 ]
 
 @todoapp.controller 'SignOutCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) ->
