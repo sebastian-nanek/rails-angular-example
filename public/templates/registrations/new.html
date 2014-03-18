@@ -1,0 +1,40 @@
+<h2>
+  Register
+</h2>
+
+<div class="panel panel-danger" ng-show="errors != ''">
+  <div class="panel-body bg-danger">
+    <strong class="text-danger">Following validation errors have occurred:</strong>
+    <div ng-repeat="(k,v) in errors">
+      <strong>{{ k }}:</strong> {{ v[0] }}
+    </div>
+  </div>
+</div>
+
+<div class="well">
+  <form ng-submit="signUp(user)">
+    <div class="form-group">
+      <label>
+        E-mail
+      </label>
+      <input id="session_email" name="user[email]" type="email" ng-model="user.email" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label>
+        Password
+      </label>
+      <input id="session_password" name="user[password]" type="password" ng-model="user.password" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label>
+        Password confirmation
+      </label>
+      <input id="session_password_confirmation" name="user[password_confirmation]" type="password" ng-model="user.password_confirmation" class="form-control"/>
+    </div>
+    <div class="actions">
+      <input name="commit" type="submit" value="Sign up" class="btn btn-primary" />
+      &nbsp;or&nbsp;
+      <a href="#/sign_in">sign in</a>
+    </div>
+  </form>
+</div>

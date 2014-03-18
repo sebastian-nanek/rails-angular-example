@@ -18,9 +18,12 @@
      templateUrl: '../templates/sessions/new.html',
      controller: 'SignInCtrl'
     }).
+    when('/sign_up', {
+     templateUrl: '../templates/registrations/new.html',
+     controller: 'SignUpCtrl'
+    }).
     when('/sign_out', {
-      controller: 'SignOutCtrl',
-      redirectTo: 'SignInCtrl'
+      controller: 'SignOutCtrl'
     }).
     otherwise({
       redirectTo: '/sign_in'
@@ -42,7 +45,12 @@
     $location.path( "/to_dos" );
 ]
 
-@todoapp.controller 'ToDosCtrl', ['$scope', 'ToDo', '$location', ($scope, ToDo, $location) ->
+@todoapp.controller 'ToDosCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->
+  # redirect if not authenticated
+  if !$rootScope.auth_token
+    $location.path( "/sign_in" );
+    return
+
   $scope.to_dos = ToDo.query()
 
   $scope.new = new ToDo()
@@ -64,7 +72,6 @@
 
 @todoapp.controller 'SignInCtrl', ['$scope', '$location', '$http', '$rootScope', ($scope, $location, $http, $rootScope) ->
   # redirect if already authenticated
-  console.log $rootScope.auth_token
   if $rootScope.auth_token
     $location.path( "/to_dos" );
     return
@@ -88,10 +95,31 @@
       )
 ]
 
+@todoapp.controller 'SignUpCtrl', ['$scope', '$location', '$http', '$rootScope', ($scope, $location, $http, $rootScope) ->
+  # redirect if already authenticated
+  if $rootScope.auth_token
+    $location.path( "/to_dos" );
+    return
+
+  $scope.errors = ""
+  $scope.signUp = (user) ->
+    if user
+      payload =
+        user:
+          email: user.email
+          password: user.password
+          password_confirmation: user.password_confirmation
+      $http.post('./users.json', payload).success((data) ->
+        $location.path( "/sign_in" );
+      ).error((data) ->
+        $scope.errors = data.errors
+      )
+]
+
 @todoapp.controller 'SignOutCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) ->
-  $rootScope.auth_token = ""
-  $rootScope.user_id = ""
+  $rootScope.auth_token = null
+  $rootScope.user_id = null
   $http.defaults.headers.common['X-Auth-Token'] = ""
   $http.delete('./users/sign_out', payload)
-  $location.path( "/" );
+  $location.path( "/sign_in" );
 ]
