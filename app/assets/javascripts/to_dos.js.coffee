@@ -30,7 +30,7 @@
     })
 ])
 
-@todoapp.controller 'EditToDoCtrl', ['$scope', 'ToDo', '$location', ($scope, ToDo, $location) ->
+@todoapp.controller 'EditToDoCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->
   # redirect if not authenticated
   if !$rootScope.auth_token
     $location.path( "/sign_in" );
@@ -42,16 +42,20 @@
     $location.path( "/to_dos" );
 ]
 
-@todoapp.controller 'NewToDoCtrl', ['$scope', 'ToDo', '$location', ($scope, ToDo, $location) ->
+@todoapp.controller 'NewToDoCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->
   # redirect if not authenticated
   if !$rootScope.auth_token
     $location.path( "/sign_in" );
     return
 
   $scope.to_do = new ToDo()
+  $scope.errors = ""
   $scope.create = (to_do) ->
-    ToDo.save({to_do: to_do})
-    $location.path( "/to_dos" );
+    result = ToDo.save({to_do: to_do}, () ->
+      $location.path( "/to_dos" );
+    , (error_response) ->
+      $scope.errors = error_response.data.errors
+    )
 ]
 
 @todoapp.controller 'ToDosCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->
@@ -96,7 +100,7 @@
         $rootScope.user_id    = data["user_id"]
         $http.defaults.headers.common['X-Auth-Token'] = data["auth_token"]
         $location.path( "/to_dos" );
-        session.errors = ""
+        $scope.errors = ""
       ).error(() ->
         session.email = ""
         session.password = ""
