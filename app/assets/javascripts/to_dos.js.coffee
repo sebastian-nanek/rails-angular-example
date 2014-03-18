@@ -37,9 +37,13 @@
     return
 
   $scope.to_do = ToDo.get(id: 13)
+  $scope.errors = ""
   $scope.update = (to_do) ->
-    ToDo.update({ id: to_do.id }, {to_do: to_do})
-    $location.path( "/to_dos" );
+    ToDo.update({ id: to_do.id }, {to_do: to_do}, () ->
+      $location.path( "/to_dos" );
+    , (error_response) ->
+      $scope.errors = error_response.data.errors
+    )
 ]
 
 @todoapp.controller 'NewToDoCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->

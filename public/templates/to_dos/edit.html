@@ -2,6 +2,15 @@
   Edit task: #{{ to_do.id }}
 </h2>
 
+<div class="panel panel-danger" ng-show="errors != ''">
+  <div class="panel-body bg-danger">
+    <strong class="text-danger">Following validation errors have occurred:</strong>
+    <div ng-repeat="(k,v) in errors">
+      <strong>{{ k }}:</strong> {{ v[0] }}
+    </div>
+  </div>
+</div>
+
 <div class="well">
   <form ng-submit="update(to_do)">
     <div class="form-group">
