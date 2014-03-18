@@ -61,7 +61,7 @@ describe AuthenticationToken do
 
       it "returns the newly created token" do
         expect(described_class.find_or_create_for(user)).
-          to eq(user.authentication_tokens.last)
+          to eq(user.authentication_tokens.order("id DESC").first)
       end
     end
 
