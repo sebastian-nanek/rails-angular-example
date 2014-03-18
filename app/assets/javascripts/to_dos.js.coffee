@@ -31,6 +31,11 @@
 ])
 
 @todoapp.controller 'EditToDoCtrl', ['$scope', 'ToDo', '$location', ($scope, ToDo, $location) ->
+  # redirect if not authenticated
+  if !$rootScope.auth_token
+    $location.path( "/sign_in" );
+    return
+
   $scope.to_do = ToDo.get(id: 13)
   $scope.update = (to_do) ->
     ToDo.update({ id: to_do.id }, {to_do: to_do})
@@ -38,9 +43,13 @@
 ]
 
 @todoapp.controller 'NewToDoCtrl', ['$scope', 'ToDo', '$location', ($scope, ToDo, $location) ->
+  # redirect if not authenticated
+  if !$rootScope.auth_token
+    $location.path( "/sign_in" );
+    return
+
   $scope.to_do = new ToDo()
   $scope.create = (to_do) ->
-    t = new ToDo(to_do)
     ToDo.save({to_do: to_do})
     $location.path( "/to_dos" );
 ]
