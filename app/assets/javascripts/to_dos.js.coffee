@@ -30,13 +30,12 @@
     })
 ])
 
-@todoapp.controller 'EditToDoCtrl', ['$scope', 'ToDo', '$location', '$rootScope', ($scope, ToDo, $location, $rootScope) ->
+@todoapp.controller 'EditToDoCtrl', ['$scope', 'ToDo', '$location', '$rootScope', '$routeParams', ($scope, ToDo, $location, $rootScope, $routeParams) ->
   # redirect if not authenticated
   if !$rootScope.auth_token
     $location.path( "/sign_in" );
     return
-
-  $scope.to_do = ToDo.get(id: 13)
+  $scope.to_do = ToDo.get(id: $routeParams.id)
   $scope.errors = ""
   $scope.update = (to_do) ->
     ToDo.update({ id: to_do.id }, {to_do: to_do}, () ->
@@ -78,7 +77,7 @@
       $scope.to_dos.splice($index, 1)
 
   $scope.edit = ($index) ->
-    $location.path( "/to_dos/" + $scope.to_dos[$index].id + "/edit" );
+    $location.path( "/to_dos/" + $index + "/edit" );
 
   $scope.complete = ($index) ->
     if confirm("Do you want to this item as completed?")

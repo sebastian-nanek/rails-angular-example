@@ -33,6 +33,8 @@
     </td>
     <td>
       {{ to_do.content }}
+
+      {{ to_do.id }}
       <span class="badge" ng-hide="to_do.completed != true">
         completed
       </span>
@@ -48,7 +50,7 @@
         <i class="glyphicon glyphicon-ok"></i>
         Complete
       </a>
-      <a ng-click="edit($index)" class="btn-success btn btn-xs">
+      <a ng-click="edit(to_do.id)" class="btn-success btn btn-xs">
         <i class="glyphicon glyphicon-edit"></i>
         Edit
       </a>
